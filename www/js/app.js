@@ -27,15 +27,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/index',
             templateUrl: 'templates/main.html',
             controller: 'main'
-        })
-        .state('schools', {
-            url: "/schools",
-            templateUrl: "templates/schools.html",
-            controller: "schools"
-        }).state('banks', {
-            url: "/banks",
-            templateUrl: "templates/banks.html",
-            controller: "banks"
         });
     $urlRouterProvider.otherwise('/index');
 });

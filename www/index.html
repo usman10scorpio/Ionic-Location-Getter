@@ -44,12 +44,17 @@
             <h1 class="title">Location Finder</h1>
         </ion-header-bar>
         <ion-nav-view></ion-nav-view>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqIcjOh7Khf6zuGMf3FYFioN6aKV95_Q">
-        </script>
-        <div class="bar bar-footer bar-assertive">
-            <button ion-button>Click here</button>
+
+        <div class="bar bar-footer bar-assertive" ng-controller="main">
+            <div class="button-bar">
+                <button class="button button-positive" ng-click="show_places('bank')">Banks</button>
+                <button class="button button-energized " ng-click="show_places('school')">Schools</button>
+                <button class="button button-positive " ng-click="initLocation() ">Find me</button>
+            </div>
         </div>
     </ion-pane>
 </body>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsqIcjOh7Khf6zuGMf3FYFioN6aKV95_Q&libraries=places ">
+</script>
 
 </html>
