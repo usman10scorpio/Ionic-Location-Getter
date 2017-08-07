@@ -1,30 +1,40 @@
-app.controller('main', function($scope) {
+app.controller('main', function ($scope) {
     var map, infoWindow;
 
-    $scope.initLocation = function() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: -34.397,
-                lng: 150.644
-            },
-            zoom: 15
-        });
-        infoWindow = new google.maps.InfoWindow;
+    $scope.initLocation = function () {
+        // map = new google.maps.Map(document.getElementById('map'), {
+        //     center: {
+        //         lat: -34.397,
+        //         lng: 150.644
+        //     },
+        //     zoom: 15
+        // });
 
-        //  Try HTML5 geolocation.
+        //infoWindow = new google.maps.InfoWindow;
+
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+
+            navigator.geolocation.getCurrentPosition(function (position) {
                 var pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
+
                 $scope.position_lat = position.coords.latitude;
                 $scope.position_long = position.coords.longitude;
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Location found.');
-                infoWindow.open(map);
-                map.setCenter(pos);
-            }, function() {
+
+                var uluru = { lat: $scope.position_lat, lng: $scope.position_long };
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: uluru
+                });
+                var marker = new google.maps.Marker({
+                    position: uluru,
+                    map: map
+                });
+
+
+            }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
         } else {
@@ -40,6 +50,7 @@ app.controller('main', function($scope) {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
+
 
     //  var map;
     // var infowindow;
@@ -62,6 +73,7 @@ app.controller('main', function($scope) {
     }
 
     function callback(results, status) {
+        console.log(results);
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 createMarker(results[i]);
@@ -76,7 +88,7 @@ app.controller('main', function($scope) {
             position: place.geometry.location
         });
 
-        google.maps.event.addListener(marker, 'click', function() {
+        google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(place.name);
             infowindow.open(map, this);
         });
@@ -84,7 +96,7 @@ app.controller('main', function($scope) {
 
 
 
-    $scope.show_places = function(place_name) {
+    $scope.show_places = function (place_name) {
         initMap(place_name);
     }
 
